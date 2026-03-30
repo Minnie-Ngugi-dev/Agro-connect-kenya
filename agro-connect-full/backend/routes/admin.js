@@ -1,0 +1,10 @@
+import express from 'express';
+import { getAnalytics, getUsers, toggleUserStatus, toggleFeatured } from '../controllers/adminController.js';
+import { protect, authorize } from '../middleware/auth.js';
+const router = express.Router();
+router.use(protect, authorize('admin'));
+router.get('/analytics', getAnalytics);
+router.get('/users', getUsers);
+router.put('/users/:id/toggle', toggleUserStatus);
+router.put('/products/:id/feature', toggleFeatured);
+export default router;

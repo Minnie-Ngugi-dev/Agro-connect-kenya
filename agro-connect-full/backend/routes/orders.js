@@ -1,0 +1,12 @@
+import express from 'express';
+import { createOrder, createCartOrder, getMyOrders, getFarmerOrders, getOrder, updateOrderStatus, getAllOrders } from '../controllers/orderController.js';
+import { protect, authorize } from '../middleware/auth.js';
+const router = express.Router();
+router.get('/', protect, authorize('admin'), getAllOrders);
+router.post('/', protect, authorize('buyer', 'hotel'), createOrder);
+router.post('/cart', protect, authorize('buyer', 'hotel'), createCartOrder);
+router.get('/my-orders', protect, getMyOrders);
+router.get('/farmer-orders', protect, authorize('farmer'), getFarmerOrders);
+router.get('/:id', protect, getOrder);
+router.put('/:id/status', protect, authorize('farmer', 'admin'), updateOrderStatus);
+export default router;

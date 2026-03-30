@@ -1,0 +1,10 @@
+import express from 'express';
+import { updateHotelProfile, placeBulkOrder, getHotelOrders, getAllHotels } from '../controllers/hotelController.js';
+import { protect, authorize } from '../middleware/auth.js';
+const router = express.Router();
+router.use(protect);
+router.put('/profile', authorize('hotel'), updateHotelProfile);
+router.post('/bulk-order', authorize('hotel'), placeBulkOrder);
+router.get('/orders', authorize('hotel'), getHotelOrders);
+router.get('/all', authorize('admin'), getAllHotels);
+export default router;
